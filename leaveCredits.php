@@ -45,13 +45,13 @@ else{
                     <div class="row no-m-t no-m-b">
                
             
+<!--                           clean-up echo htmlentities            -->
 
-
-                    <a href="leavehistory.php" target="blank">
+                    <a href="#" target="blank">
                     <div class="col s12 m12 l4">
                         <div class="card stats-card">
                             <div class="card-content">
-                                <span class="card-title">Total Leaves</span>
+                                <span class="card-title">Vacation Leave Credits</span>
 <?php $eid=$_SESSION['eid'];
 $sql = "SELECT id from  tblleaves where empid ='$eid'";
 $query = $dbh -> prepare($sql);
@@ -68,11 +68,13 @@ $totalleaves=$query->rowCount();
                         </div>
                     </div></a>
 
+<!--                           clean-up echo htmlentities            -->
+
      <a href="leavehistory.php" target="blank">
                     <div class="col s12 m12 l4">
                         <div class="card stats-card">
                             <div class="card-content">
-                                <span class="card-title">Approved Leaves</span>
+                                <span class="card-title">Mandatory Leave Credits</span>
                                     <?php
 $sql = "SELECT id from  tblleaves where Status=1 and empid ='$eid'";
 $query = $dbh -> prepare($sql);
@@ -91,11 +93,13 @@ $approvedleaves=$query->rowCount();
 
 
 
+<!--                           clean-up echo htmlentities            -->
+
      <a href="leavehistory.php" target="blank">
                     <div class="col s12 m12 l4">
                         <div class="card stats-card">
                             <div class="card-content">
-                                <span class="card-title">New Leaves Applications</span>
+                                <span class="card-title">Sick Leave Credits</span>
                                     <?php
 $sql = "SELECT id from  tblleaves where Status=0 and empid ='$eid'";
 $query = $dbh -> prepare($sql);
@@ -111,11 +115,60 @@ $approvedleaves=$query->rowCount();
                             </div>
                         </div>
                     </div></a>
+
+<!--                           clean-up echo htmlentities            -->
+
                     <a href ="leaveCredits.php" target="blank">
                     <div class="col s12 m12 l4">
                         <div class="card stats-card">
                             <div class="card-content">
-                                <span class="card-title">Leave Credit</span>
+                                <span class="card-title">Maternity Leave Credit</span>
+                                    <?php
+$sql = "SELECT id from  tblleaves";
+$query = $dbh -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$totalleaves=$query->rowCount();
+?>   
+                                <span class="stats-counter"><span class="counter"><?php echo htmlentities($totalleaves);?></span></span>
+                      
+                            </div>
+                            <div class="progress stats-card-progress">
+                                <div class="success" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div></a>
+
+<!--                           clean-up echo htmlentities            -->
+
+                    <a href ="leaveCredits.php" target="blank">
+                    <div class="col s12 m12 l4">
+                        <div class="card stats-card">
+                            <div class="card-content">
+                                <span class="card-title">Paternity Leave Credit</span>
+                                    <?php
+$sql = "SELECT id from  tblleaves";
+$query = $dbh -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$totalleaves=$query->rowCount();
+?>   
+                                <span class="stats-counter"><span class="counter"><?php echo htmlentities($totalleaves);?></span></span>
+                      
+                            </div>
+                            <div class="progress stats-card-progress">
+                                <div class="success" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div></a>
+
+<!--                           clean-up echo htmlentities            -->
+
+                    <a href ="leaveCredits.php" target="blank">
+                    <div class="col s12 m12 l4">
+                        <div class="card stats-card">
+                            <div class="card-content">
+                                <span class="card-title">Special Leave Credit</span>
                                     <?php
 $sql = "SELECT id from  tblleaves";
 $query = $dbh -> prepare($sql);
