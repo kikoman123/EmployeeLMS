@@ -137,6 +137,25 @@ $error="Something went wrong. Please try again";
     <hr>
 </div>
 
+<script>
+    function toggleFileUpload() {
+        const leaveType = document.getElementById("leavetype").value;
+        const fileUploadDiv = document.getElementById("fileUploadDiv");
+        const fileUpload = document.getElementById("fileUpload");
+
+        // Show or hide the file upload div based on the selected leave type
+        if (leaveType === "Sick Leave") {
+            fileUploadDiv.style.display = "block";
+            fileupload.setAttribute("required", "true");
+            
+
+
+        } else {
+            fileUploadDiv.style.display = "none";
+            fileUpload.removeAttribute("required"); // Clear the file input if not sick leave
+        }
+    }
+</script>
 <div class="input-field col m6 s12">
 <label for="fromdate">From  Date</label>
 <input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
@@ -177,23 +196,7 @@ $error="Something went wrong. Please try again";
         <script src="assets/js/alpha.min.js"></script>
         <script src="assets/js/pages/form_elements.js"></script>
           <script src="assets/js/pages/form-input-mask.js"></script>
-                <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>             
-<script>
-    function toggleFileUpload() {
-        const leaveType = document.getElementById("leavetype").value;
-        const fileUploadDiv = document.getElementById("fileUploadDiv");
-        const fileUpload = document.getElementById("fileUpload");
-
-        // Show or hide the file upload div based on the selected leave type
-        if (leaveType === "Sick Leave") {
-            fileUploadDiv.style.display = "block";
-            fileupload.setAttribute("required", "true");
-        } else {
-            fileUploadDiv.style.display = "none";
-            fileUpload.removeAttribute("required"); // Clear the file input if not sick leave
-        }
-    }
-</script>
+                <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
     </body>
 </html>
 <?php } ?> 
