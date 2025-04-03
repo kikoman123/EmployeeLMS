@@ -104,31 +104,49 @@ $error="Something went wrong. Please try again";
                                                 <div class="row">
                                                     <div class="col m12">
                                                         <div class="row">
-     <?php if($error){?><div class="errorWrap"><strong>ERROR </strong>:<?php echo htmlentities($error); ?> </div><?php } 
-                else if($msg){?><div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div><?php }?>
+     <?php if(isset($error) && $error){ ?>
+    <div class="errorWrap"><strong>ERROR </strong>:<?php echo htmlentities($error); ?> </div>
+<?php } else if(isset($msg) && $msg){ ?>
+    <div class="succWrap"><strong>SUCCESS</strong>:<?php echo htmlentities($msg); ?> </div>
+<?php } ?>
 
-
- <div class="input-field col  s12">
-<select  name="leavetype" autocomplete="off">
-<option value="">Select leave type...</option>
-<?php $sql = "SELECT  LeaveType from tblleavetype";
-IF(LeaveType=="Sick Leave"){
-    include('');
-}
-$query = $dbh -> prepare($sql);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{   ?>                                            
-<option value="<?php echo htmlentities($result->LeaveType);?>"><?php echo htmlentities($result->LeaveType);?></option>
-<?php }} ?>
-</select>
+<div class="input-field col s12">
+    <label for="leavetype"></label>
+    <select name="leavetype" id="leavetype" autocomplete="off" onchange="toggleFileUpload()">
+        <option value="" name="select">Select leave type...</option>
+        <?php
+        $sql = "SELECT LeaveType from tblleavetype";
+        $query = $dbh->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        if ($query->rowCount() > 0) {
+            foreach ($results as $result) { ?>
+                <option value="<?php echo htmlentities($result->LeaveType); ?>">
+                    <?php echo htmlentities($result->LeaveType); ?>
+                </option>
+        <?php }
+        } ?>
+    </select>
 </div>
 
+<div class="input-field col s12" id="fileUploadDiv" style="display: none;">
+    <label for="fileUpload">Upload Supporting Document</label>
+    <input type="file" id="fileUpload" name="fileUpload">
+</div>
 
+<script>
+    function toggleFileUpload() {
+        const leaveType = document.getElementById("leavetype").value;
+        const fileUploadDiv = document.getElementById("fileUploadDiv");
+
+        // Show or hide the file upload div based on the selected leave type
+        if (leaveType === "Sick Leave") {
+            fileUploadDiv.style.display = "block";
+        } else {
+            fileUploadDiv.style.display = "none";
+        }
+    }
+</script>
 <div class="input-field col m6 s12">
 <label for="fromdate">From  Date</label>
 <input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
