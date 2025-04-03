@@ -19,6 +19,7 @@ $isread=0;
 if($fromdate > $todate){
                 $error=" ToDate should be greater than FromDate ";
            }
+        //    add file upload logic here if needed
 $sql="INSERT INTO tblleaves(LeaveType,ToDate,FromDate,Description,Status,IsRead,empid) VALUES(:leavetype,:todate,:fromdate,:description,:status,:isread,:empid)";
 $query = $dbh->prepare($sql);
 $query->bindParam(':leavetype',$leavetype,PDO::PARAM_STR);
@@ -130,26 +131,12 @@ $error="Something went wrong. Please try again";
 </div>
 
 <div class="input-field col s12" id="fileUploadDiv" style="display: none;">
-    <label for="fileUpload"></label>
-    <input type="file" id="fileUpload" name="fileUpload" required>
+    <br>
+    <label for="fileUpload">Please upload file here (.pdf , .jpg)</label><br>
+    <input type="file" id="fileUpload" name="fileUpload" required accept= ".pdf,.jpg">
+    <hr>
 </div>
 
-<script>
-    function toggleFileUpload() {
-        const leaveType = document.getElementById("leavetype").value;
-        const fileUploadDiv = document.getElementById("fileUploadDiv");
-        const fileUpload = document.getElementById("fileUpload");
-
-        // Show or hide the file upload div based on the selected leave type
-        if (leaveType === "Sick Leave") {
-            fileUploadDiv.style.display = "block";
-            fileupload.setAttribute("required", "true");
-        } else {
-            fileUploadDiv.style.display = "none";
-            fileUpload.removeAttribute("required"); // Clear the file input if not sick leave
-        }
-    }
-</script>
 <div class="input-field col m6 s12">
 <label for="fromdate">From  Date</label>
 <input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
@@ -190,7 +177,23 @@ $error="Something went wrong. Please try again";
         <script src="assets/js/alpha.min.js"></script>
         <script src="assets/js/pages/form_elements.js"></script>
           <script src="assets/js/pages/form-input-mask.js"></script>
-                <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+                <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>             
+<script>
+    function toggleFileUpload() {
+        const leaveType = document.getElementById("leavetype").value;
+        const fileUploadDiv = document.getElementById("fileUploadDiv");
+        const fileUpload = document.getElementById("fileUpload");
+
+        // Show or hide the file upload div based on the selected leave type
+        if (leaveType === "Sick Leave") {
+            fileUploadDiv.style.display = "block";
+            fileupload.setAttribute("required", "true");
+        } else {
+            fileUploadDiv.style.display = "none";
+            fileUpload.removeAttribute("required"); // Clear the file input if not sick leave
+        }
+    }
+</script>
     </body>
 </html>
 <?php } ?> 
