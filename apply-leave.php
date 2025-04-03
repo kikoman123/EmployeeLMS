@@ -130,20 +130,23 @@ $error="Something went wrong. Please try again";
 </div>
 
 <div class="input-field col s12" id="fileUploadDiv" style="display: none;">
-    <label for="fileUpload">Upload Supporting Document</label>
-    <input type="file" id="fileUpload" name="fileUpload">
+    <label for="fileUpload"></label>
+    <input type="file" id="fileUpload" name="fileUpload" required>
 </div>
 
 <script>
     function toggleFileUpload() {
         const leaveType = document.getElementById("leavetype").value;
         const fileUploadDiv = document.getElementById("fileUploadDiv");
+        const fileUpload = document.getElementById("fileUpload");
 
         // Show or hide the file upload div based on the selected leave type
         if (leaveType === "Sick Leave") {
             fileUploadDiv.style.display = "block";
+            fileupload.setAttribute("required", "true");
         } else {
             fileUploadDiv.style.display = "none";
+            fileUpload.removeAttribute("required"); // Clear the file input if not sick leave
         }
     }
 </script>
