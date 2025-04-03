@@ -144,10 +144,12 @@ CREATE TABLE `tblleavetype` (
 --
 
 INSERT INTO `tblleavetype` (`id`, `LeaveType`, `Description`, `CreationDate`) VALUES
-(1, 'Casual Leaves', 'Casual Leaves', '2023-08-31 14:52:22'),
-(2, 'Earned Leaves', 'Earned Leaves', '2023-08-31 14:52:49'),
-(3, 'Sick Leaves', 'Sick Leaves', '2023-08-31 14:53:15'),
-(4, 'RH (Restricted Leaves)', 'Restricted Leaves', '2023-09-01 11:37:06');
+(1, 'Vacation Leave', 'Vacation Leave', '2025-04-03 14:52:22'),
+(2, 'Mandatory Leave', 'Mandatory Leave', '2025-04-03 02:25:26'),
+(3, 'Sick Leave', 'Sick Leave', '2025-04-03 02:26:16'),
+(4, 'Maternity Leave', 'Maternity Leave', '0000-00-00 00:00:00'),
+(5, 'Paternity Leave', 'Paternity Leave', '2025-04-03 02:30:46'),
+(6, 'Special Leave', 'Special Leave', '2025-04-03 02:31:45');
 
 --
 -- Indexes for dumped tables

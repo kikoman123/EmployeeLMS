@@ -112,6 +112,9 @@ $error="Something went wrong. Please try again";
 <select  name="leavetype" autocomplete="off">
 <option value="">Select leave type...</option>
 <?php $sql = "SELECT  LeaveType from tblleavetype";
+IF(LeaveType=="Sick Leave"){
+    include('');
+}
 $query = $dbh -> prepare($sql);
 $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
