@@ -146,12 +146,13 @@ $error="Something went wrong. Please try again";
 <div>
     <hr>
     <label for="Days of leave">Days of leave</label>
-        <hr>
+    <input type="text" id="days" name="days" readonly>
+    <hr>
     
 </div>
 <div class="input-field col m12 s12">
 <label for="birthdate">Description</label> 
-<input type="text" placeholder="days " id="days" name="days" >   
+   
 
 <textarea id="textarea1" name="description" class="materialize-textarea" length="500" required></textarea>
 </div>
@@ -160,7 +161,7 @@ $error="Something went wrong. Please try again";
     <br>
     <label for="fileUpload">Please attach supporting document here (.pdf)</label><br>
     <input type="file" id="fileUpload" name="fileUpload" required accept= ".pdf">
-    <hr>
+    <hr>    
 </div>
 <!-- function when selecting Sick Leave function -->
 <script>
@@ -256,4 +257,98 @@ $error="Something went wrong. Please try again";
             firstDayOfWeek: 1 // Start calendar on Monday
         }
     });
+
+
+    var fromDateInput = document.getElementById("fromdate");
+    var toDateInput = document.getElementById("todate");
+    
+    
+    function range(fromDateInput, toDateInput) {
+        const result = [];
+        for (let i = start; i <= end; i++) {
+            result.push(i);
+        }
+        return result;
+    }
+</script>
+<script>
+    // Function to calculate the number of weekdays between two dates
+    function calculateWeekdays(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let count = 0;
+
+        // Loop through each date in the range
+        for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+            // Check if the day is a weekday (Monday to Friday)
+            if (d.getDay() !== 0 && d.getDay() !== 6) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    // Event listener for changes in the date inputs
+    fromDateInput.addEventListener("change", function() {
+        const fromDate = fromDateInput.value;
+        const toDate = toDateInput.value;
+
+        if (fromDate && toDate) {
+            const weekdaysCount = calculateWeekdays(fromDate, toDate);
+            document.getElementById("days").value = weekdaysCount;
+        }
+    });
+
+    toDateInput.addEventListener("change", function() {
+        const fromDate = fromDateInput.value;
+        const toDate = toDateInput.value;
+
+        if (fromDate && toDate) {
+            const weekdaysCount = calculateWeekdays(fromDate, toDate);
+            document.getElementById("days").value = weekdaysCount;
+        }
+    });
+</script>
+<!-- From Date Input -->
+<label for="fromdate">From Date:</label>
+<input type="date" id="fromdate" name="fromdate">
+
+<!-- To Date Input -->
+<label for="todate">To Date:</label>
+<input type="date" id="todate" onchange="calculateDays()" value="0" name="todate">
+
+<!-- Days Counter -->
+<label for="days">Days of Leave:</label>
+<input type="text" id="days" name="days"  readonly>
+
+<script>
+    // Function to calculate the difference in days
+    function calculateDays() {
+        const fromDate = document.getElementById("fromdate").value;
+        const toDate = document.getElementById("todate").value;
+        const daysField = document.getElementById("days");
+
+        if (fromDate && toDate) {
+            const from = new Date(fromDate);
+            const to = new Date(toDate);
+
+            // Calculate the difference in time and convert to days
+            const timeDiff = to - from;
+            const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+            // Ensure the difference is positive
+            if (daysDiff >= 0) {
+                daysField.value = daysDiff + 1; // Include both start and end dates
+            } else {
+                daysField.value = "Invalid date range";
+            }
+        } else {
+            daysField.value = ""; // Clear the field if dates are incomplete
+        }
+    }
+
+    // Attach event listeners to the date fields
+    document.getElementById("fromdate").addEventListener("change", calculateDays);
+    document.getElementById("todate").addEventListener("change", calculateDays);
 </script>
