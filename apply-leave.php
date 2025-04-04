@@ -63,6 +63,7 @@ $error="Something went wrong. Please try again";
         <link href="assets/plugins/material-preloader/css/materialPreloader.min.css" rel="stylesheet"> 
         <link href="assets/css/alpha.min.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <style>
         .errorWrap {
     padding: 10px;
@@ -130,16 +131,27 @@ $error="Something went wrong. Please try again";
     </select>
 </div>
 
+<!-- Add the From Date input field -->
 <div class="input-field col m6 s12">
-<label for="fromdate">From  Date</label>
-<input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
+    <label for="fromdate">From Date (Weekdays Only)</label>
+    <input type="text" id="fromdate" name="fromdate" required>
 </div>
+
+<!-- Add the To Date input field -->
 <div class="input-field col m6 s12">
-<label for="todate">To Date</label>
-<input placeholder="" id="mask1" name="todate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
+    <label for="todate">To Date (Weekdays Only)</label>
+    <input type="text" id="todate" name="todate" required>
+</div>
+<!-- days counter (from(date) - to (date)) -->
+<div>
+    <hr>
+    <label for="Days of leave">Days of leave</label>
+        <hr>
+    
 </div>
 <div class="input-field col m12 s12">
-<label for="birthdate">Description</label>    
+<label for="birthdate">Description</label> 
+<input type="text" placeholder="days " id="days" name="days" >   
 
 <textarea id="textarea1" name="description" class="materialize-textarea" length="500" required></textarea>
 </div>
@@ -196,8 +208,9 @@ $error="Something went wrong. Please try again";
         <script src="assets/plugins/jquery-blockui/jquery.blockui.js"></script>
         <script src="assets/js/alpha.min.js"></script>
         <script src="assets/js/pages/form_elements.js"></script>
-          <script src="assets/js/pages/form-input-mask.js"></script>
-                <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+        <script src="assets/js/pages/form-input-mask.js"></script>
+        <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </body>
 </html>
 <?php } ?>  
@@ -210,8 +223,37 @@ $error="Something went wrong. Please try again";
             method: 'POST',
             body: formData
         })
-        alert("file uploaded");
+        
 
     }
 
+</script>
+
+<!-- Configure Flatpickr for weekday-only selection -->
+<script>
+    flatpickr("#fromdate", {
+        dateFormat: "Y-m-d",
+        disable: [
+            function(date) {
+                // Disable weekends: Sunday (0), Saturday (6)
+                return (date.getDay() === 0 || date.getDay() === 6);
+            }
+        ],
+        locale: {
+            firstDayOfWeek: 1 // Start calendar on Monday
+        }
+    });
+
+    flatpickr("#todate", {
+        dateFormat: "Y-m-d",
+        disable: [
+            function(date) {
+                // Disable weekends: Sunday (0), Saturday (6)
+                return (date.getDay() === 0 || date.getDay() === 6);
+            }
+        ],
+        locale: {
+            firstDayOfWeek: 1 // Start calendar on Monday
+        }
+    });
 </script>
