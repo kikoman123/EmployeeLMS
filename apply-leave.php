@@ -129,14 +129,14 @@ $error="Something went wrong. Please try again";
         } ?>
     </select>
 </div>
-
+<!-- // This is the file upload section -->
 <div class="input-field col s12" id="fileUploadDiv" style="display: none;">
     <br>
-    <label for="fileUpload">Please upload file here (.pdf , .jpg)</label><br>
-    <input type="file" id="fileUpload" name="fileUpload" required accept= ".pdf,.jpg">
+    <label for="fileUpload">Please upload file here (.pdf)</label><br>
+    <input type="file" id="fileUpload" name="fileUpload" required accept= ".pdf">
     <hr>
 </div>
-
+<!-- function when selecting Sick Leave function -->
 <script>
     function toggleFileUpload() {
         const leaveType = document.getElementById("leavetype").value;
@@ -170,7 +170,7 @@ $error="Something went wrong. Please try again";
 <textarea id="textarea1" name="description" class="materialize-textarea" length="500" required></textarea>
 </div>
 </div>
-      <button type="submit" name="apply" id="apply" class="waves-effect waves-light btn indigo m-b-xs">Apply</button>                                             
+      <button type="submit" onclick="saveFile()" name="apply" id="apply" class="waves-effect waves-light btn indigo m-b-xs">Apply</button>                                             
 
                                                 </div>
                                             </div>
@@ -199,4 +199,18 @@ $error="Something went wrong. Please try again";
                 <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
     </body>
 </html>
-<?php } ?> 
+<?php } ?>  
+<!-- // this is for handling file uploads to upload.php -->
+<script>
+    async function saveFile(){
+        let formData = new FormData();
+        formData.append('file', fileUpload.files[0]);
+        await fetch('upload.php', {
+            method: 'POST',
+            body: formData
+        })
+        alert("file uploaded");
+
+    }
+
+</script>
