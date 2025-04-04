@@ -129,10 +129,24 @@ $error="Something went wrong. Please try again";
         } ?>
     </select>
 </div>
+
+<div class="input-field col m6 s12">
+<label for="fromdate">From  Date</label>
+<input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
+</div>
+<div class="input-field col m6 s12">
+<label for="todate">To Date</label>
+<input placeholder="" id="mask1" name="todate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
+</div>
+<div class="input-field col m12 s12">
+<label for="birthdate">Description</label>    
+
+<textarea id="textarea1" name="description" class="materialize-textarea" length="500" required></textarea>
+</div>
 <!-- // This is the file upload section -->
 <div class="input-field col s12" id="fileUploadDiv" style="display: none;">
     <br>
-    <label for="fileUpload">Please upload file here (.pdf)</label><br>
+    <label for="fileUpload">Please attach supporting document here (.pdf)</label><br>
     <input type="file" id="fileUpload" name="fileUpload" required accept= ".pdf">
     <hr>
 </div>
@@ -156,19 +170,6 @@ $error="Something went wrong. Please try again";
         }
     }
 </script>
-<div class="input-field col m6 s12">
-<label for="fromdate">From  Date</label>
-<input placeholder="" id="mask1" name="fromdate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
-</div>
-<div class="input-field col m6 s12">
-<label for="todate">To Date</label>
-<input placeholder="" id="mask1" name="todate" class="masked" type="text" data-inputmask="'alias': 'date'" required>
-</div>
-<div class="input-field col m12 s12">
-<label for="birthdate">Description</label>    
-
-<textarea id="textarea1" name="description" class="materialize-textarea" length="500" required></textarea>
-</div>
 </div>
       <button type="submit" onclick="saveFile()" name="apply" id="apply" class="waves-effect waves-light btn indigo m-b-xs">Apply</button>                                             
 
