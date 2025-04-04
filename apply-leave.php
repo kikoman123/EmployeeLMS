@@ -205,7 +205,7 @@ $error="Something went wrong. Please try again";
     async function saveFile(){
         let formData = new FormData();
         formData.append('file', fileUpload.files[0]);
-        await fetch('upload.php', {
+        await fetch('/upload.php', {
             method: 'POST',
             body: formData
         })
