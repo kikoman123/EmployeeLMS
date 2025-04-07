@@ -115,16 +115,17 @@ CREATE TABLE `tblleaves` (
   `AdminRemarkDate` varchar(120) DEFAULT NULL,
   `Status` int(1) DEFAULT NULL,
   `IsRead` int(1) DEFAULT NULL,
-  `empid` int(11) DEFAULT NULL
+  `empid` int(11) DEFAULT NULL,
+  `dayc` INT(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblleaves`
 --
 
-INSERT INTO `tblleaves` (`id`, `LeaveType`, `ToDate`, `FromDate`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`) VALUES
-(11, 'Casual Leaves', '17/09/2024', '10/09/2024', 'I need leave to visit my home town. ', '2024-09-11 15:06:21', 'Approved', '2024-09-13 20:39:40 ', 1, 1, 1),
-(12, 'Casual Leaves', '15/09/2024', '09/09/2024', 'Need casual leaves for some personal work.', '2024-09-12 11:42:40', 'Leave approved', '2024-09-13 20:39:40', 1, 1, 5);
+INSERT INTO `tblleaves` (`id`, `LeaveType`, `ToDate`, `FromDate`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`,`dayc`) VALUES
+(11, 'Casual Leaves', '17/09/2024', '10/09/2024', 'I need leave to visit my home town. ', '2024-09-11 15:06:21', 'Approved', '2024-09-13 20:39:40 ', 1, 1, 1,5),
+(12, 'Casual Leaves', '15/09/2024', '09/09/2024', 'Need casual leaves for some personal work.', '2024-09-12 11:42:40', 'Leave approved', '2024-09-13 20:39:40', 1, 1, 5,6);
 
 -- --------------------------------------------------------
 

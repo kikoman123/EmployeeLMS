@@ -13,7 +13,7 @@ if(isset($_POST['apply'])) {
     $fromdate = $_POST['fromdate'];  
     $todate = $_POST['todate'];
     $description = $_POST['description'];  
-    $dayc = $_POST['days']; // Ensure this value is captured
+    $dayc = $_POST['days']; // Capture the days value
     $status = 0;
     $isread = 0;
 
@@ -45,7 +45,7 @@ if(isset($_POST['apply'])) {
     ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
     <head>
         
         <!-- Title -->
@@ -166,7 +166,7 @@ $totalleaves=$query->rowCount();
 <div>
     <hr>
     <label for="Days of leave">Days of leave</label>
-    <input type="text" id="days" name="days" value="0"readonly>
+    <input type="text" id="days" name="days" value="" readonly>
     <hr>
     
 </div>
@@ -363,4 +363,4 @@ $totalleaves=$query->rowCount();
     // Attach event listeners to the date fields
     document.getElementById("fromdate").addEventListener("change", calculateDays);
     document.getElementById("todate").addEventListener("change", calculateDays);
-</script> -->
+</script>

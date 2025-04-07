@@ -115,16 +115,17 @@ CREATE TABLE `tblleaves` (
   `AdminRemarkDate` varchar(120) DEFAULT NULL,
   `Status` int(1) DEFAULT NULL,
   `IsRead` int(1) DEFAULT NULL,
-  `empid` int(11) DEFAULT NULL
+  `empid` int(11) DEFAULT NULL,
+  `dayc` INT(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblleaves`
 --
 
-INSERT INTO `tblleaves` (`id`, `LeaveType`, `ToDate`, `FromDate`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`, `dayC`) VALUES
-(11, 'Casual Leaves', '17/09/2023', '10/09/2023', 'I need leave to visit my home town. ', '2023-08-31 15:06:21', 'Approved', '2023-08-31 20:39:40 ', 1, 1, 1, 2),
-(12, 'Casual Leaves', '15/09/2023', '09/09/2023', 'Need casual leaves for some personal work.', '2023-09-01 11:42:40', 'Leave approved', '2023-09-01 17:13:20 ', 1, 1, 5);
+INSERT INTO `tblleaves` (`id`, `LeaveType`, `ToDate`, `FromDate`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`, `dayc`) VALUES
+(11, 'Casual Leaves', '17/09/2023', '10/09/2023', 'I need leave to visit my home town. ', '2023-08-31 15:06:21', 'Approved', '2023-08-31 20:39:40 ', 1, 1, 1,5),
+(12, 'Casual Leaves', '15/09/2023', '09/09/2023', 'Need casual leaves for some personal work.', '2023-09-01 11:42:40', 'Leave approved', '2023-09-01 17:13:20 ', 1, 1, 5,6);
 
 -- --------------------------------------------------------
 
@@ -219,11 +220,38 @@ ALTER TABLE `tblleaves`
 --
 ALTER TABLE `tblleavetype`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
-ALTER TABLE tblleaves ADD dayC INT NOT NULL DEFAULT 0;
-DESCRIBE tblleaves;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+<script>
+    function calculateWeekdays() {
+        const fromDate = document.getElementById("fromdate").value;
+        const toDate = document.getElementById("todate").value;
+        const daysField = document.getElementById("days");
+
+        if (fromDate && toDate) {
+            const start = new Date(fromDate);
+            const end = new Date(toDate);
+            let count = 0;
+
+            // Loop through each date in the range
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                // Check if the day is a weekday (Monday to Friday)
+                if (d.getDay() !== 0 && d.getDay() !== 6) {
+                    count++;
+                }
+            }
+
+            // Update the days field with the count of weekdays
+            daysField.value = count;
+        } else {
+            daysField.value = ""; // Clear the field if dates are incomplete
+        }
+    }
+
+    // Attach event listeners to the date fields
+    document.getElementById("fromdate").addEventListener("change", calculateWeekdays);
+    document.getElementById("todate").addEventListener("change", calculateWeekdays);
+</script>

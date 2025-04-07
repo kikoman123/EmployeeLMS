@@ -8,8 +8,40 @@ header('location:index.php');
 }
 else{
 
+if(isset($_POST['apply'])) {
+    $empid = $_SESSION['eid'];
+    $leavetype = $_POST['leavetype'];
+    $fromdate = $_POST['fromdate'];  
+    $todate = $_POST['todate'];
+    $description = $_POST['description'];  
+    $dayc = $_POST['days']; // Capture the days value
+    $status = 0;
+    $isread = 0;
 
+    if($fromdate > $todate) {
+        $error = "ToDate should be greater than FromDate";
+    } else {
+        $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayc) 
+                VALUES (:leavetype, :todate, :fromdate, :description, :status, :isread, :empid, :days)";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
+        $query->bindParam(':fromdate', $fromdate, PDO::PARAM_STR);
+        $query->bindParam(':todate', $todate, PDO::PARAM_STR);
+        $query->bindParam(':description', $description, PDO::PARAM_STR);
+        $query->bindParam(':status', $status, PDO::PARAM_STR);
+        $query->bindParam(':isread', $isread, PDO::PARAM_STR);
+        $query->bindParam(':empid', $empid, PDO::PARAM_STR);
+        $query->bindParam(':days', $dayc, PDO::PARAM_INT); // Bind the days value
+        $query->execute();
+        $lastInsertId = $dbh->lastInsertId();
 
+        if($lastInsertId) {
+            $msg = "Leave applied successfully";
+        } else {
+            $error = "Something went wrong. Please try again";
+        }
+    }
+}
 
  ?>
 <!DOCTYPE html>
@@ -118,7 +150,7 @@ foreach($results as $result)
         <tr>
                 <td style="font-size:16px;"><b>Days of Leave: </b></td>
                 <td colspan="5"><?php
-                // insert number of days for the Leave
+                $dayc = $_POST['days']; // Capture the days value
                 ?></td>
         </tr>
 <tr>
