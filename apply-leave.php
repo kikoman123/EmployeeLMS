@@ -95,6 +95,26 @@ $error="Something went wrong. Please try again";
                     <div class="col s12">
                         <div class="page-title">Apply for Leave</div>
                     </div>
+                    <a href ="leaveCredits.php" target="blank">
+                    <div class="col s12 m12 l4">
+                        <div class="card stats-card">
+                            <div class="card-content">
+                                <span class="card-title">Leave Credit</span>
+                                    <?php
+$sql = "SELECT id from  tblleaves";
+$query = $dbh -> prepare($sql);
+$query->execute();
+$results=$query->fetchAll(PDO::FETCH_OBJ);
+$totalleaves=$query->rowCount();
+?>   
+                                <span class="stats-counter"><span class="counter"><?php echo htmlentities($totalleaves);?></span></span>
+                      
+                            </div>
+                            <div class="progress stats-card-progress">
+                                <div class="success" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div></a>
                     <div class="col s12 m12 l8">
                         <div class="card">
                             <div class="card-content">

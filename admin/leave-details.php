@@ -143,6 +143,13 @@ foreach($results as $result)
                                            <td><?php echo htmlentities($result->PostingDate);?></td>
                                         </tr>
 
+        <tr>
+                <td style="font-size:16px;"><b>Days of Leave: </b></td>
+                <td colspan="5"><?php
+                // insert number of days for the Leave
+                ?></td>
+        </tr>
+
 <tr>
                                              <td style="font-size:16px;"><b>Employe Leave Description : </b></td>
                                             <td colspan="5"><?php echo htmlentities($result->Description);?></td>
