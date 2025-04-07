@@ -147,7 +147,7 @@ foreach($results as $result)
                 <td style="font-size:16px;"><b>Days of Leave: </b></td>
                 <td colspan="5"><?php
                 // insert number of days for the Leave
-                ?></td>
+                echo htmlentities($result->dayC);?></td>
         </tr>
 
 <tr>

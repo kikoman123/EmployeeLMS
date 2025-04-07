@@ -7,39 +7,39 @@ if(strlen($_SESSION['emplogin'])==0)
 header('location:index.php');
 }
 else{
-if(isset($_POST['apply']))
-{
-$empid=$_SESSION['eid'];
- $leavetype=$_POST['leavetype'];
-$fromdate=$_POST['fromdate'];  
-$todate=$_POST['todate'];
-$description=$_POST['description'];  
-$status=0;
-$isread=0;
-if($fromdate > $todate){
-                $error=" ToDate should be greater than FromDate ";
-           }
-        //    add file upload logic here if needed
-$sql="INSERT INTO tblleaves(LeaveType,ToDate,FromDate,Description,Status,IsRead,empid) VALUES(:leavetype,:todate,:fromdate,:description,:status,:isread,:empid)";
-$query = $dbh->prepare($sql);
-$query->bindParam(':leavetype',$leavetype,PDO::PARAM_STR);
-$query->bindParam(':fromdate',$fromdate,PDO::PARAM_STR);
-$query->bindParam(':todate',$todate,PDO::PARAM_STR);
-$query->bindParam(':description',$description,PDO::PARAM_STR);
-$query->bindParam(':status',$status,PDO::PARAM_STR);
-$query->bindParam(':isread',$isread,PDO::PARAM_STR);
-$query->bindParam(':empid',$empid,PDO::PARAM_STR);
-$query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if($lastInsertId)
-{
-$msg="Leave applied successfully";
-}
-else 
-{
-$error="Something went wrong. Please try again";
-}
+if(isset($_POST['apply'])) {
+    $empid = $_SESSION['eid'];
+    $leavetype = $_POST['leavetype'];
+    $fromdate = $_POST['fromdate'];  
+    $todate = $_POST['todate'];
+    $description = $_POST['description'];  
+    $dayc = $_POST['days']; // Ensure this value is captured
+    $status = 0;
+    $isread = 0;
 
+    if($fromdate > $todate) {
+        $error = "ToDate should be greater than FromDate";
+    } else {
+        $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayC) 
+                VALUES (:leavetype, :todate, :fromdate, :description, :status, :isread, :empid, :days)";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
+        $query->bindParam(':fromdate', $fromdate, PDO::PARAM_STR);
+        $query->bindParam(':todate', $todate, PDO::PARAM_STR);
+        $query->bindParam(':description', $description, PDO::PARAM_STR);
+        $query->bindParam(':status', $status, PDO::PARAM_STR);
+        $query->bindParam(':isread', $isread, PDO::PARAM_STR);
+        $query->bindParam(':empid', $empid, PDO::PARAM_STR);
+        $query->bindParam(':days', $dayc, PDO::PARAM_INT); // Bind the days value
+        $query->execute();
+        $lastInsertId = $dbh->lastInsertId();
+
+        if($lastInsertId) {
+            $msg = "Leave applied successfully";
+        } else {
+            $error = "Something went wrong. Please try again";
+        }
+    }
 }
 
     ?>
@@ -166,7 +166,7 @@ $totalleaves=$query->rowCount();
 <div>
     <hr>
     <label for="Days of leave">Days of leave</label>
-    <input type="text" id="days" name="days" readonly>
+    <input type="text" id="days" name="days" value="0"readonly>
     <hr>
     
 </div>
