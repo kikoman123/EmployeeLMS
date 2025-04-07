@@ -51,7 +51,7 @@ if(isset($_POST['apply'])) {
     if($fromdate > $todate) {
         $error = "ToDate should be greater than FromDate";
     } else {
-        $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayC) 
+        $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayc) 
                 VALUES (:leavetype, :todate, :fromdate, :description, :status, :isread, :empid, :days)";
         $query = $dbh->prepare($sql);
         $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
@@ -179,9 +179,7 @@ foreach($results as $result)
 
         <tr>
                 <td style="font-size:16px;"><b>Days of Leave: </b></td>
-                <td colspan="5"><?php
-                // insert number of days for the Leave
-                echo htmlentities($result->dayc);?></td>
+                <td colspan="5"><?php echo htmlentities($result->dayc); ?></td>
         </tr>
 
 <tr>
@@ -245,7 +243,7 @@ if($stats==0)
                                             <option value="2">Not Approved</option>
                                         </select></p>
                                         <p><textarea id="textarea1" name="description" class="materialize-textarea" name="description" placeholder="Description" length="500" maxlength="500" required></textarea></p>
-    </div>
+    </div>  
     <div class="modal-footer" style="width:90%">
        <input type="submit" class="waves-effect waves-light btn blue m-b-xs" name="update" value="Submit">
     </div>

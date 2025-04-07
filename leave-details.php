@@ -107,7 +107,14 @@ if(isset($_POST['apply'])) {
                                     <tbody>
 <?php 
 $lid=intval($_GET['leaveid']);
-$sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblemployees.Gender,tblemployees.Phonenumber,tblemployees.EmailId,tblleaves.LeaveType,tblleaves.ToDate,tblleaves.FromDate,tblleaves.Description,tblleaves.PostingDate,tblleaves.Status,tblleaves.AdminRemark,tblleaves.AdminRemarkDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.id=:lid";
+    $sql = "SELECT tblleaves.id as lid, tblemployees.FirstName, tblemployees.LastName, tblemployees.EmpId, 
+        tblemployees.id, tblemployees.Gender, tblemployees.Phonenumber, tblemployees.EmailId, 
+        tblleaves.LeaveType, tblleaves.ToDate, tblleaves.FromDate, tblleaves.Description, 
+        tblleaves.PostingDate, tblleaves.Status, tblleaves.AdminRemark, tblleaves.AdminRemarkDate, 
+        tblleaves.dayc 
+        FROM tblleaves 
+        JOIN tblemployees ON tblleaves.empid = tblemployees.id 
+        WHERE tblleaves.id = :lid";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':lid',$lid,PDO::PARAM_STR);
 $query->execute();
@@ -150,13 +157,12 @@ foreach($results as $result)
         <tr>
                 <td style="font-size:16px;"><b>Days of Leave: </b></td>
                 <td colspan="5"><?php
-                $dayc = $_POST['days']; // Capture the days value
+                 echo htmlentities($result->dayc); // Capture the days value
                 ?></td>
         </tr>
 <tr>
                                              <td style="font-size:16px;"><b>Employe Leave Description : </b></td>
                                             <td colspan="5"><?php echo htmlentities($result->Description);?></td>
-                                            <td style="font-size:16px;"><b>Days of Leave . :</b></td>
                                             
                                         </tr>
 
