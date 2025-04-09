@@ -155,6 +155,23 @@ INSERT INTO `tblleavetype` (`id`, `LeaveType`, `Description`, `CreationDate`) VA
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tblleavecredits`
+--
+
+CREATE TABLE `tblleavecredits` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `empid` int(11) NOT NULL, -- Foreign key to tblemployees
+  `LeaveType` varchar(200) NOT NULL, -- Leave category (e.g., Vacation Leave, Sick Leave)
+  `TotalCredits` int(11) NOT NULL DEFAULT 0, -- Total leave credits
+  `UsedCredits` int(11) NOT NULL DEFAULT 0, -- Used leave credits
+  `RemainingCredits` int(11) GENERATED ALWAYS AS (TotalCredits - UsedCredits) STORED, -- Automatically calculated
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`empid`) REFERENCES `tblemployees`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Indexes for dumped tables
 --
 
@@ -190,6 +207,13 @@ ALTER TABLE `tblleavetype`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tblleavecredits`
+--
+ALTER TABLE `tblleavecredits`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `empid` (`empid`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -222,6 +246,13 @@ ALTER TABLE `tblleaves`
 --
 ALTER TABLE `tblleavetype`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `tblleavecredits`
+--
+ALTER TABLE `tblleavecredits`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
