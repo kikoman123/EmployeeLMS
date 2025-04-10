@@ -59,6 +59,16 @@ $query->execute();
 $results=$query->fetchAll(PDO::FETCH_OBJ);
 $totalleaves=$query->rowCount();
 ?>   
+<?php
+$sql = "SELECT LeaveType, TotalCredits, UsedCredits, RemainingCredits FROM tblleavecredits WHERE empid = :empid";
+$query = $dbh->prepare($sql);
+$query->bindParam(':empid', $_SESSION['eid'], PDO::PARAM_INT);
+$query->execute();
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+
+foreach ($results as $result) {
+    echo "<p>{$result->LeaveType}: {$result->RemainingCredits} remaining out of {$result->TotalCredits}</p>";
+}?>
                                 <span class="stats-counter"><span class="counter"><?php echo htmlentities($totalleaves);?></span></span>
                       
                             </div>

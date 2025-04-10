@@ -14,31 +14,52 @@ if(isset($_POST['apply'])) {
     $fromdate = $_POST['fromdate'];  
     $todate = $_POST['todate'];
     $description = $_POST['description'];  
-    $dayc = $_POST['days']; // Capture the days value
+    $dayc = $_POST['days']; // Number of leave days
     $status = 0;
     $isread = 0;
 
     if($fromdate > $todate) {
         $error = "ToDate should be greater than FromDate";
     } else {
-        $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayc) 
-                VALUES (:leavetype, :todate, :fromdate, :description, :status, :isread, :empid, :days)";
+        // Check if the user has enough leave credits
+        $sql = "SELECT RemainingCredits FROM tblleavecredits WHERE empid = :empid AND LeaveType = :leavetype";
         $query = $dbh->prepare($sql);
+        $query->bindParam(':empid', $empid, PDO::PARAM_INT);
         $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
-        $query->bindParam(':fromdate', $fromdate, PDO::PARAM_STR);
-        $query->bindParam(':todate', $todate, PDO::PARAM_STR);
-        $query->bindParam(':description', $description, PDO::PARAM_STR);
-        $query->bindParam(':status', $status, PDO::PARAM_STR);
-        $query->bindParam(':isread', $isread, PDO::PARAM_STR);
-        $query->bindParam(':empid', $empid, PDO::PARAM_STR);
-        $query->bindParam(':days', $dayc, PDO::PARAM_INT); // Bind the days value
         $query->execute();
-        $lastInsertId = $dbh->lastInsertId();
+        $result = $query->fetch(PDO::FETCH_OBJ);
 
-        if($lastInsertId) {
-            $msg = "Leave applied successfully";
+        if ($result && $result->RemainingCredits >= $dayc) {
+            // Deduct leave credits
+            $sql = "UPDATE tblleavecredits SET UsedCredits = UsedCredits + :dayc WHERE empid = :empid AND LeaveType = :leavetype";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':dayc', $dayc, PDO::PARAM_INT);
+            $query->bindParam(':empid', $empid, PDO::PARAM_INT);
+            $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
+            $query->execute();
+
+            // Insert leave application
+            $sql = "INSERT INTO tblleaves (LeaveType, ToDate, FromDate, Description, Status, IsRead, empid, dayc) 
+                    VALUES (:leavetype, :todate, :fromdate, :description, :status, :isread, :empid, :dayc)";
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':leavetype', $leavetype, PDO::PARAM_STR);
+            $query->bindParam(':fromdate', $fromdate, PDO::PARAM_STR);
+            $query->bindParam(':todate', $todate, PDO::PARAM_STR);
+            $query->bindParam(':description', $description, PDO::PARAM_STR);
+            $query->bindParam(':status', $status, PDO::PARAM_STR);
+            $query->bindParam(':isread', $isread, PDO::PARAM_STR);
+            $query->bindParam(':empid', $empid, PDO::PARAM_INT);
+            $query->bindParam(':dayc', $dayc, PDO::PARAM_INT);
+            $query->execute();
+
+            $lastInsertId = $dbh->lastInsertId();
+            if ($lastInsertId) {
+                $msg = "Leave applied successfully";
+            } else {
+                $error = "Something went wrong. Please try again";
+            }
         } else {
-            $error = "Something went wrong. Please try again";
+            $error = "Insufficient leave credits for $leavetype";
         }
     }
 }

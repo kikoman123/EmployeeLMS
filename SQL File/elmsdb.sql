@@ -169,6 +169,18 @@ CREATE TABLE `tblleavecredits` (
   FOREIGN KEY (`empid`) REFERENCES `tblemployees`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
+--
+-- Dumping data for table `tblleavecredits`
+--
+
+INSERT INTO `tblleavecredits` (`empid`, `LeaveType`, `TotalCredits`, `UsedCredits`) VALUES
+(1, 'Vacation Leave', 15, 0),
+(1, 'Mandatory Leave', 5, 0),
+(1, 'Sick Leave', 10, 0),
+(1, 'Maternity Leave', 60, 0),
+(1, 'Paternity Leave', 7, 0),
+(1, 'Special Leave', 3, 0);
+
 -- --------------------------------------------------------
 
 --
